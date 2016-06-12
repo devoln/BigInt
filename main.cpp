@@ -1,6 +1,4 @@
-﻿#pragma execution_character_set("utf-8")
-
-#include "BigInt.h"
+﻿#include "BigInt.h"
 
 #include <iostream>
 using namespace std;
