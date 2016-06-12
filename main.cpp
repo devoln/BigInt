@@ -1,3 +1,5 @@
+﻿#pragma execution_character_set("utf-8")
+
 #include "BigInt.h"
 
 #include <iostream>
@@ -5,10 +7,6 @@ using namespace std;
 
 int main()
 {
-	int x=1, y=2, z=3;
-	(x=y)=z;
-	cout << x << ", " << y << ", " << z << endl;
-
 	BigInt A, B;
 	size_t C;
 	cout << "Enter A, B and C:" << endl;
