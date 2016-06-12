@@ -111,7 +111,7 @@ BigInt BigInt::operator*(const BigInt& rhs) const
 	return result;
 }
 
-BigInt BigInt::divide(Value rhs, Value* mod) const
+BigInt BigInt::Divide(Value rhs, Value* mod) const
 {
 	assert(rhs!=0);
 	int cmp = abs_compare(rhs);
@@ -141,12 +141,12 @@ BigInt BigInt::divide(Value rhs, Value* mod) const
 	return result;
 }
 
-BigInt BigInt::divide(const BigInt& rhs, BigInt* mod) const
+BigInt BigInt::Divide(const BigInt& rhs, BigInt* mod) const
 {
 	if(rhs.arr.size()==1)
 	{
 		if(mod!=nullptr) *mod = 0;
-		auto result = divide(rhs.arr[0], mod!=nullptr? &mod->arr[0]: nullptr);
+		auto result = Divide(rhs.arr[0], mod!=nullptr? &mod->arr[0]: nullptr);
 		result.negative = (negative!=rhs.negative);
 		return result;
 	}
@@ -204,7 +204,7 @@ std::string BigInt::ToString() const
 	do
 	{
 		Value mod;
-		temp = temp.divide(1000000000, &mod);
+		temp = temp.Divide(1000000000, &mod);
 
 		char* tempstrIter = tempstr;
 		do *tempstrIter++ = '0'+mod%10; while(mod/=10);

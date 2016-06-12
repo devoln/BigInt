@@ -39,20 +39,20 @@ public:
 	BigInt operator*(const BigInt& rhs) const;
 	BigInt& operator*=(const BigInt& rhs) {return *this=*this*rhs;}
 
-	BigInt divide(Value rhs, Value* mod) const;
-	BigInt divide(const BigInt& rhs, BigInt* mod) const;
+	BigInt Divide(Value rhs, Value* mod) const;
+	BigInt Divide(const BigInt& rhs, BigInt* mod) const;
 
 
 
-	BigInt operator/(Value rhs) const {return divide(rhs, nullptr);}
-	BigInt& operator/=(Value rhs) {return *this=*this/rhs;}
-	BigInt operator/(const BigInt& rhs) const {return divide(rhs, nullptr);}
-	BigInt& operator/=(const BigInt& rhs) {return *this=*this/rhs;}
+	BigInt operator/(Value rhs) const {return Divide(rhs, nullptr);}
+	BigInt& operator/=(Value rhs) {return *this = *this/rhs;}
+	BigInt operator/(const BigInt& rhs) const {return Divide(rhs, nullptr);}
+	BigInt& operator/=(const BigInt& rhs) {return *this = *this/rhs;}
 
-	Value operator%(Value rhs) const {Value mod; divide(rhs, &mod); return mod;}
-	BigInt operator%(const BigInt& rhs) const {BigInt mod; divide(rhs, &mod); return mod;}
-	BigInt& operator%=(Value rhs) {return *this=BigInt(*this%rhs);}
-	BigInt& operator%=(const BigInt& rhs) {return *this=*this%rhs;}
+	Value operator%(Value rhs) const {Value mod; Divide(rhs, &mod); return mod;}
+	BigInt operator%(const BigInt& rhs) const {BigInt mod; Divide(rhs, &mod); return mod;}
+	BigInt& operator%=(Value rhs) {return *this = BigInt(*this%rhs);}
+	BigInt& operator%=(const BigInt& rhs) {return *this = *this%rhs;}
 
 
 	bool operator==(const BigInt& rhs) const {return Compare(rhs)==0;}
