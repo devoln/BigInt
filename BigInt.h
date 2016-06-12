@@ -55,28 +55,30 @@ public:
 	BigInt& operator%=(const BigInt& rhs) {return *this=*this%rhs;}
 
 
-	bool operator==(const BigInt& rhs) const {return compare(rhs)==0;}
-	bool operator!=(const BigInt& rhs) const {return compare(rhs)!=0;}
-	bool operator>=(const BigInt& rhs) const {return compare(rhs)>=0;}
-	bool operator<=(const BigInt& rhs) const {return compare(rhs)<=0;}
-	bool operator>(const BigInt& rhs) const {return compare(rhs)>0;}
-	bool operator<(const BigInt& rhs) const {return compare(rhs)<0;}
+	bool operator==(const BigInt& rhs) const {return Compare(rhs)==0;}
+	bool operator!=(const BigInt& rhs) const {return Compare(rhs)!=0;}
+	bool operator>=(const BigInt& rhs) const {return Compare(rhs)>=0;}
+	bool operator<=(const BigInt& rhs) const {return Compare(rhs)<=0;}
+	bool operator>(const BigInt& rhs) const {return Compare(rhs)>0;}
+	bool operator<(const BigInt& rhs) const {return Compare(rhs)<0;}
 
-	bool operator==(Value rhs) const {return compare(rhs)==0;}
-	bool operator!=(Value rhs) const {return compare(rhs)!=0;}
-	bool operator>=(Value rhs) const {return compare(rhs)>=0;}
-	bool operator<=(Value rhs) const {return compare(rhs)<=0;}
-	bool operator>(Value rhs) const {return compare(rhs)>0;}
-	bool operator<(Value rhs) const {return compare(rhs)<0;}
+	bool operator==(Value rhs) const {return Compare(rhs)==0;}
+	bool operator!=(Value rhs) const {return Compare(rhs)!=0;}
+	bool operator>=(Value rhs) const {return Compare(rhs)>=0;}
+	bool operator<=(Value rhs) const {return Compare(rhs)<=0;}
+	bool operator>(Value rhs) const {return Compare(rhs)>0;}
+	bool operator<(Value rhs) const {return Compare(rhs)<0;}
 
 	BigInt operator-() const {BigInt result=*this; result.negative=!negative; return result;}
-	BigInt& operator++() {return *this=*this+1;}
-	BigInt& operator--() {return *this=*this-1;}
-	BigInt operator++(int) {auto result=*this; ++*this; return result;}
-	BigInt operator--(int) {auto result=*this; --*this; return result;}
+	BigInt& operator++() {return *this = *this+1;}
+	BigInt& operator--() {return *this = *this-1;}
+	BigInt operator++(int) {auto result = *this; ++*this; return result;}
+	BigInt operator--(int) {auto result = *this; --*this; return result;}
 
 	BigInt& operator=(const BigInt& rhs) {arr=rhs.arr; negative=rhs.negative; return *this;}
 	BigInt& operator=(BigInt&& rhs) {arr=std::move(rhs.arr); negative=rhs.negative; return *this;}
+
+	void Negate() {negative = !negative;}
 	
 
 	Value ToUInt() const {return arr.size()!=0? arr[0]: 0;}
@@ -90,20 +92,16 @@ public:
 
 	std::string ToString() const;
 
-	friend std::ostream& operator<<(std::ostream& stream, const BigInt& val) {return stream << val.ToString();}
-	friend std::istream& operator>>(std::istream& stream, BigInt& val);
-
-	int abs_compare(Value rhs) const;
-	int abs_compare(const BigInt& rhs) const;
-	int compare(const BigInt& rhs) const;
-	int compare(Value rhs) const;
+	int Compare(const BigInt& rhs) const;
+	int Compare(Value rhs) const;
 
 private:
-	void incDigit(size_t i) {while(++arr[i]==0) i++;}
+	void inc_digit(size_t i) {while(++arr[i]==0) i++;}
 
 	BigInt abs_add(const BigInt& rhs) const;
-
 	BigInt abs_subtract(const BigInt& rhs) const;
+	int abs_compare(Value rhs) const;
+	int abs_compare(const BigInt& rhs) const;
 
 	void trim_size();
 
@@ -111,6 +109,9 @@ private:
 	friend BigInt sqrt(const BigInt& a);
 	friend BigInt abs(BigInt x);
 };
+
+std::ostream& operator<<(std::ostream& stream, const BigInt& val);
+std::istream& operator>>(std::istream& stream, BigInt& val);
 
 inline BigInt operator*(BigInt::Value lhs, const BigInt& rhs) {return rhs*lhs;}
 inline BigInt operator*(BigInt::SignedValue lhs, const BigInt& rhs) {return rhs*lhs;}

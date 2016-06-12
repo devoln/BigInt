@@ -15,7 +15,7 @@ extern "C"
 	DLLCALL BigInt* BigInt_Divide(const BigInt* lhs, const BigInt* rhs, BigInt* mod) {return new BigInt(lhs->divide(*rhs, mod));}
 	DLLCALL BigInt* BigInt_ChangeSign(const BigInt* val) {return new BigInt(-*val);}
 	DLLCALL BigInt* BigInt_Sqrt(const BigInt* val) {return new BigInt(sqrt(*val));}
-	DLLCALL int BigInt_Compare(const BigInt* lhs, const BigInt* rhs) {return lhs->compare(*rhs);}
+	DLLCALL int BigInt_Compare(const BigInt* lhs, const BigInt* rhs) {return lhs->Compare(*rhs);}
 	DLLCALL std::string* BigInt_ToString(const BigInt* lhs, const char** pStr)
 	{
 		std::string* result=new std::string(lhs->ToString());

@@ -104,7 +104,7 @@ BigInt BigInt::operator*(const BigInt& rhs) const
 			if(result.arr[i+j] < (Value)product) remainder++;
 			result.arr[i+j+1] += (Value)remainder;
 			if(result.arr[i+j+1] < remainder)
-				result.incDigit(i+j+2);
+				result.inc_digit(i+j+2);
 		}
 	}
 	result.trim_size();
@@ -228,6 +228,11 @@ std::string BigInt::ToString() const
 	return result;
 }
 
+std::ostream& operator<<(std::ostream& stream, const BigInt& val)
+{
+	return stream << val.ToString();
+}
+
 std::istream& operator>>(std::istream& stream, BigInt& val)
 {
 	val = 0;
@@ -253,7 +258,7 @@ std::istream& operator>>(std::istream& stream, BigInt& val)
 			if(c=='+' || isspace(c)) continue;
 		}
 
-		val.negative=neg;
+		if(neg) val.Negate();
 		return stream;
 	}
 }
@@ -280,7 +285,7 @@ int BigInt::abs_compare(const BigInt& rhs) const
 	return (arr[0]>rhs.arr[0])-(arr[0]<rhs.arr[0]);
 }
 
-int BigInt::compare(const BigInt& rhs) const
+int BigInt::Compare(const BigInt& rhs) const
 {
 	if(this->arr.size()==1 && rhs.arr.size()==1 && rhs.arr[0]==this->arr[0]) return 0; //+0 == -0
 	if(negative && !rhs.negative) return -1;
@@ -292,7 +297,7 @@ int BigInt::compare(const BigInt& rhs) const
 	return sign*abs_compare(rhs);
 }
 
-int BigInt::compare(Value rhs) const
+int BigInt::Compare(Value rhs) const
 {
 	if(arr.size()==1 && arr[0]==rhs) return 0; //+0 == -0
 	if(negative && rhs>0) return -1;
